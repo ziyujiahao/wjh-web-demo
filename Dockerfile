@@ -1,18 +1,7 @@
-FROM registry.fit2cloud.com/fit2cloud2/fabric8-java-alpine-openjdk8-jre
-
-MAINTAINER FIT2CLOUD <support@fit2cloud.com>
-
-RUN mkdir -p /opt/apps
-
-ADD target/wjh-web.demo.jar /opt/apps
-
-ENV JAVA_APP_JAR=/opt/apps/wjh-web.demo.jar
-
-ENV AB_OFF=true
-
-ENV JAVA_OPTIONS=-Dfile.encoding=utf-8
-
-HEALTHCHECK --interval=15s --timeout=5s --retries=20 --start-period=30s CMD curl -f 127.0.0.1:8080/hello
-
-CMD ["/deployments/run-java.sh"]
+FROM java:8
+MAINTAINER 70kg 449246146@qq.com
+VOLUME /tmp
+ADD wjh-web-demo-1.0.jar app.jar
+RUN bash -c 'touch /app.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
